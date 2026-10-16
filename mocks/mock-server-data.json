@@ -1,0 +1,61 @@
+{
+  "api": {
+    "names": [
+      "Уютная студия",
+      "Просторный лофт",
+      "Стильная квартира в современном стиле",
+      "Милая квартира-студия",
+      "Комната в общежитие"
+    ],
+    "descriptions": [
+      "Светлая студия с видом на Эйфелеву башню, идеально для пары",
+      "Лофт с панорамными окнами рядом с каналами",
+      "Квартира в современном стиле, подойдет для творческих и уверенных в себе людей",
+      "Небольшая студия возле парка",
+      "Недорогая комната, недалеко от учебного корпуса местного университета"
+    ],
+    "previews": [
+      "preview-1.jpg",
+      "preview-2.jpg",
+      "preview-3.jpg",
+      "preview-4.jpg",
+      "preview-5.jpg"
+    ],
+    "images": [
+      "paris-1.jpg",
+      "paris-2.jpg",
+      "cologne-1.jpg",
+      "cologne-2.jpg",
+      "brussels-1.jpg",
+      "brussels-2.jpg",
+      "amsterdam-1.jpg",
+      "amsterdam-2.jpg",
+      "hamburg-1.jpg",
+      "hamburg-2.jpg",
+      "dusseldorf-1.jpg",
+      "dusseldorf-2.jpg"
+    ],
+    "users": [
+      "Иван",
+      "Олег",
+      "Роланд",
+      "Холи",
+      "Джек",
+      "Антон"
+    ],
+    "emails": [
+      "snow@pisem.local",
+      "president@dka.local",
+      "fish@big.local",
+      "test@pisem.local",
+      "freedom@pisem.local"
+    ],
+    "avatars": [
+      "user.jpg",
+      "photo.jpg",
+      "awesome-avatar.jpg",
+      "roland.jpg",
+      "smite.jpg"
+    ]
+  }
+}

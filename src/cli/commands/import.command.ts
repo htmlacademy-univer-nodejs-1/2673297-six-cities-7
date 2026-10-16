@@ -1,13 +1,22 @@
 ﻿import chalk from 'chalk';
 import { Command } from './command.interface.js';
 import { TSVFileReader } from '../../shared/libs/file-reader/tsv-file-reader.js';
+import {Offer} from '../../shared/types/offer.type';
 
 export class ImportCommand implements Command {
   public getName(): string {
     return '--import';
   }
 
-  public execute(...parameters: string[]): void {
+  private onImportedLine(offer: Offer) {
+    console.info(offer);
+  }
+
+  private onCompleteImport(count: number) {
+    console.info(chalk.bold.green(`${count} rows imported.`));
+  }
+
+  public async execute(...parameters: string[]): Promise<void> {
     const [filename] = parameters;
 
     if (!filename) {
@@ -16,17 +25,14 @@ export class ImportCommand implements Command {
     }
 
     const fileReader = new TSVFileReader(filename.trim());
+    fileReader.on('line', this.onImportedLine);
+    fileReader.on('end', this.onCompleteImport);
 
     try {
-      fileReader.read();
-      const offers = fileReader.toArray();
+      await fileReader.read();
 
       console.info();
       console.info(chalk.bold.green(`Data from "${filename}" was successfully imported.`));
-      console.info(chalk.green(`Offers found: ${offers.length}`));
-      console.info();
-      console.log(offers);
-      console.info();
     } catch (err) {
 
       if (!(err instanceof Error)) {

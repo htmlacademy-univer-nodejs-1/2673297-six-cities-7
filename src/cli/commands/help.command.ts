@@ -5,6 +5,7 @@ const COMMANDS: [command: string, description: string][] = [
   ['--version', 'выводит номер версии'],
   ['--help', 'печатает этот текст'],
   ['--import <path>', 'импортирует данные из TSV'],
+  ['--generate <count> <path> <url>', 'генерирует данные TSV']
 ];
 
 export class HelpCommand implements Command {

@@ -1,11 +1,13 @@
-﻿import { readFileSync } from 'node:fs';
+﻿import {createReadStream} from 'node:fs';
 import { FileReader } from './file-reader.interface.js';
 import { Offer } from '../../types/offer.type.js';
 import { CITIES } from '../../types/city.constants.js';
 import { ComfortType } from '../../types/comfort.enum.js';
 import { TypeOffer } from '../../types/type-offer.enum.js';
 import { User, UserType } from '../../types/user.type.js';
+import EventEmitter from 'node:events';
 
+const CHUNK_SIZE = 16384;
 
 const parseBoolean = (value: string): boolean => value === 'true';
 
@@ -13,33 +15,46 @@ const parseNumber = (value: string): number => Number.parseFloat(value);
 
 const parseStringArray = (value: string): string[] => JSON.parse(value) as string[];
 
-export class TSVFileReader implements FileReader {
-  private rawData = '';
+export class TSVFileReader extends EventEmitter implements FileReader {
 
-  constructor(
-    private readonly filename: string
-  ) {}
-
-  public read(): void {
-    const data = readFileSync(this.filename, { encoding: 'utf-8' });
-    this.rawData = data.replace(/^\uFEFF/, '');
+  constructor(private readonly filename: string) {
+    super();
   }
 
-  public toArray(): Offer[] {
-    if (!this.rawData) {
-      throw new Error('File was not read');
+  public async read(): Promise<void> {
+    const readStream = createReadStream(this.filename, {
+      highWaterMark: CHUNK_SIZE,
+      encoding: 'utf-8',
+    });
+
+    let remainingData = '';
+    let nextLinePosition = -1;
+    let importedRowCount = 0;
+
+    for await (const chunk of readStream) {
+      remainingData += chunk.toString();
+      while ((nextLinePosition = remainingData.indexOf('\n')) >= 0) {
+        const completeRow = remainingData.slice(0, nextLinePosition + 1);
+        remainingData = remainingData.slice(++nextLinePosition);
+        importedRowCount++;
+        const cleanRow = completeRow.replace(/^\uFEFF/, '').replace(/\r$/, '');
+
+        if (cleanRow.trim().length > 0) {
+          try {
+            const offer = this.parseLineToOffer(cleanRow);
+            this.emit('line', offer);
+          } catch (error) {
+            this.emit('error', `Ошибка при парсинге строки ${importedRowCount}: ${error}`);
+          }
+        }
+      }
     }
 
-    return this.rawData
-      .split('\n')
-      .filter((row) => row.trim().length > 0)
-      .map((line) => line.replace(/\r$/, ''))
-      .map((line) => line.split('\t'))
-      .map((row) => this.parseRow(row));
+    this.emit('end', importedRowCount);
   }
 
-  private parseRow(row: string[]): Offer {
-
+  private parseLineToOffer(line: string): Offer {
+    const row = line.split('\t');
     const [
       name,
       description,
