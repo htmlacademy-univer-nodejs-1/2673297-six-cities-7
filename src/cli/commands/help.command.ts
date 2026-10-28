@@ -4,7 +4,7 @@ import { Command } from './command.interface.js';
 const COMMANDS: [command: string, description: string][] = [
   ['--version', 'выводит номер версии'],
   ['--help', 'печатает этот текст'],
-  ['--import <path>', 'импортирует данные из TSV'],
+  ['--import <path> <login> <password> <host> <dbname> <salt>', 'импортирует данные из TSV в MongoDB'],
   ['--generate <count> <path> <url>', 'генерирует данные TSV']
 ];
 
