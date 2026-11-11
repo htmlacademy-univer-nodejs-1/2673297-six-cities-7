@@ -1,8 +1,8 @@
-﻿import {User} from './user.type';
-import {TypeOffer} from './type-offer.enum';
-import {ComfortType} from './comfort.enum';
-import {City} from './city.type';
-import {Coordinates} from './coordinates.types';
+import {User} from '../user/user.type.js';
+import {TypeOffer} from '../type-offer.enum.js';
+import {ComfortType} from '../comfort.enum.js';
+import {City} from '../city.type.js';
+import {Coordinates} from '../coordinates.types.js';
 
 export type Offer = {
   name: string,

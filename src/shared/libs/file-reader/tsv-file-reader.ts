@@ -1,10 +1,10 @@
-﻿import {createReadStream} from 'node:fs';
+import {createReadStream} from 'node:fs';
 import { FileReader } from './file-reader.interface.js';
-import { Offer } from '../../types/offer.type.js';
+import { Offer } from '../../types/offer/offer.type.js';
 import { CITIES } from '../../types/city.constants.js';
 import { ComfortType } from '../../types/comfort.enum.js';
 import { TypeOffer } from '../../types/type-offer.enum.js';
-import { User, UserType } from '../../types/user.type.js';
+import { User, UserType } from '../../types/user/user.type.js';
 import EventEmitter from 'node:events';
 
 const CHUNK_SIZE = 16384;
@@ -42,9 +42,12 @@ export class TSVFileReader extends EventEmitter implements FileReader {
         if (cleanRow.trim().length > 0) {
           try {
             const offer = this.parseLineToOffer(cleanRow);
-            this.emit('line', offer);
+
+            await new Promise((resolve) => {
+              this.emit('line', offer, resolve);
+            });
           } catch (error) {
-            this.emit('error', `Ошибка при парсинге строки ${importedRowCount}: ${error}`);
+            this.emit('error', `Ошибка при обработке строки ${importedRowCount}: ${error}`);
           }
         }
       }
