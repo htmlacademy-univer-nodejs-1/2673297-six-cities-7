@@ -16,12 +16,16 @@ import { CreateOfferDto } from '../../shared/types/offer/dto/create-offer.dto.js
 import { getMongoURI } from '../../shared/helpers/database.js';
 import { getErrorMessage } from '../../shared/helpers/common.js';
 import { DEFAULT_DB_PORT, DEFAULT_USER_PASSWORD } from './command.constant.js';
+import {DefaultCommentService} from '../../shared/types/comment/default-comment.service';
+import {CommentService} from '../../shared/types/comment/comment-service.interface';
+import {CommentModel} from '../../shared/types/comment/comment.entity';
 
 export class ImportCommand implements Command {
   private userService: UserService;
   private offerService: OfferService;
+  private readonly commentService: CommentService;
   private databaseClient: DatabaseClient;
-  private logger: Logger;
+  private readonly logger: Logger;
   private salt: string;
 
   constructor() {
@@ -31,7 +35,8 @@ export class ImportCommand implements Command {
 
     this.logger = new ConsoleLogger();
     this.userService = new DefaultUserService(this.logger, UserModel);
-    this.offerService = new DefaultOfferService(this.logger, OfferModel);
+    this.commentService = new DefaultCommentService(CommentModel, OfferModel);
+    this.offerService = new DefaultOfferService(this.logger, OfferModel, this.commentService);
     this.databaseClient = new MongoDatabaseClient(this.logger);
   }
 
@@ -86,10 +91,10 @@ export class ImportCommand implements Command {
 
   private async saveOffer(offer: Offer) {
     const user = await this.userService.findOrCreate({
-      name: offer.author.name,
-      email: offer.author.email,
-      avatar: offer.author.avatar,
-      type: offer.author.type,
+      name: offer.user.name,
+      email: offer.user.email,
+      avatar: offer.user.avatar,
+      type: offer.user.type,
       password: DEFAULT_USER_PASSWORD,
     }, this.salt);
 
@@ -101,8 +106,6 @@ export class ImportCommand implements Command {
       preview: offer.preview,
       images: offer.images,
       isPremium: offer.isPremium,
-      isFavorite: offer.isFavorite,
-      rating: offer.rating,
       type: offer.type,
       numberRooms: offer.numberRooms,
       numberGuests: offer.numberGuests,

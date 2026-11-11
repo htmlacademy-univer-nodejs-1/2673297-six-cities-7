@@ -109,7 +109,7 @@ export class TSVFileReader extends EventEmitter implements FileReader {
       numberGuests: parseNumber(numberGuests),
       cost: parseNumber(cost),
       comforts: parseStringArray(comforts) as ComfortType[],
-      author,
+      user: author,
       coordinates: {
         latitude: parseNumber(latitude),
         longitude: parseNumber(longitude),

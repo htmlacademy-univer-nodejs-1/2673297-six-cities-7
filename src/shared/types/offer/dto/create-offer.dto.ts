@@ -12,8 +12,6 @@ export class CreateOfferDto {
   public preview: string;
   public images: string[];
   public isPremium: boolean;
-  public isFavorite: boolean;
-  public rating: number;
   public type: TypeOffer;
   public numberRooms: number;
   public numberGuests: number;

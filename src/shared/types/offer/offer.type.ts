@@ -19,6 +19,6 @@ export type Offer = {
   numberGuests: number,
   cost: number,
   comforts: ComfortType[],
-  author: User,
+  user: User,
   coordinates: Coordinates
 }
