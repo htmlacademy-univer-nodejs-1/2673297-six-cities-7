@@ -1,6 +1,6 @@
 ﻿import { defaultClasses, getModelForClass, modelOptions, prop, Ref } from '@typegoose/typegoose';
-import {OfferEntity} from '../offer/offer.entity';
-import {UserEntity} from '../user/user.entity';
+import {OfferEntity} from '../offer/offer.entity.js';
+import {UserEntity} from '../user/user.entity.js';
 
 export interface CommentEntity extends defaultClasses.Base {}
 

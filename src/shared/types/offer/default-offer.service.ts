@@ -6,10 +6,10 @@ import { CreateOfferDto } from './dto/create-offer.dto.js';
 import {Logger} from '../../libs/logger/logger.interface.js';
 import {Component} from '../component.enum.js';
 import { UpdateOfferDto } from './dto/update-offer.dto.js';
-import {DEFAULT_OFFER_COUNT, PREMIUM_OFFER_COUNT} from './offer.constant';
-import {SortType} from '../sort-type.enum';
-import {CityName} from '../city.enum';
-import {CommentService} from '../comment/comment-service.interface';
+import {DEFAULT_OFFER_COUNT, PREMIUM_OFFER_COUNT} from './offer.constant.js';
+import {SortType} from '../sort-type.enum.js';
+import {CityName} from '../city.enum.js';
+import {CommentService} from '../comment/comment-service.interface.js';
 
 @injectable()
 export class DefaultOfferService implements OfferService {
@@ -30,14 +30,14 @@ export class DefaultOfferService implements OfferService {
   public async findById(offerId: string): Promise<DocumentType<OfferEntity> | null> {
     return this.offerModel
       .findById(offerId)
-      .populate(['userId'])
+      .populate(['user'])
       .exec();
   }
 
   public async updateById(offerId: string, dto: UpdateOfferDto): Promise<DocumentType<OfferEntity> | null> {
     return this.offerModel
       .findByIdAndUpdate(offerId, dto, {new: true})
-      .populate(['userId'])
+      .populate(['user'])
       .exec();
   }
 
@@ -55,7 +55,7 @@ export class DefaultOfferService implements OfferService {
       .find()
       .sort({ createdDate: SortType.Down })
       .limit(limit)
-      .populate(['userId'])
+      .populate(['user'])
       .exec();
   }
 
@@ -64,7 +64,7 @@ export class DefaultOfferService implements OfferService {
       .find({ city, isPremium: true })
       .sort({ createdDate: SortType.Down })
       .limit(PREMIUM_OFFER_COUNT)
-      .populate(['userId'])
+      .populate(['user'])
       .exec();
   }
 

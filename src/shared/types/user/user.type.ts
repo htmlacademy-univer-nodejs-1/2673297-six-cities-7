@@ -6,6 +6,6 @@
 export type User = {
   name: string,
   email: string,
-  avatar: string,
+  avatarPath: string,
   type: UserType
 }

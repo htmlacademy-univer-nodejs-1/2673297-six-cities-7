@@ -1,8 +1,8 @@
 ﻿import { CreateOfferDto } from './dto/create-offer.dto.js';
 import { DocumentType } from '@typegoose/typegoose';
 import { OfferEntity } from './offer.entity.js';
-import {UpdateOfferDto} from './dto/update-offer.dto';
-import {CityName} from '../city.enum';
+import {UpdateOfferDto} from './dto/update-offer.dto.js';
+import {CityName} from '../city.enum.js';
 
 export interface OfferService {
   create(dto: CreateOfferDto): Promise<DocumentType<OfferEntity>>;

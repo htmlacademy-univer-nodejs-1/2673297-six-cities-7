@@ -3,10 +3,10 @@ import { CommentService } from './comment-service.interface.js';
 import { DocumentType, types } from '@typegoose/typegoose';
 import { CommentEntity } from './comment.entity.js';
 import { CreateCommentDto } from './dto/create-comment.dto.js';
-import {Component} from '../component.enum';
-import {MAX_COMMENT_COUNT} from './comment.constant';
-import {SortType} from '../sort-type.enum';
-import {OfferEntity} from '../offer/offer.entity';
+import {Component} from '../component.enum.js';
+import {MAX_COMMENT_COUNT} from './comment.constant.js';
+import {SortType} from '../sort-type.enum.js';
+import {OfferEntity} from '../offer/offer.entity.js';
 import { Types } from 'mongoose';
 
 @injectable()

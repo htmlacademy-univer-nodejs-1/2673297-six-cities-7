@@ -65,13 +65,13 @@ export class OfferEntity extends defaultClasses.TimeStamps {
   public comforts: ComfortType[];
 
   @prop({default: 0})
-  public commentCount: number;
+  public commentsCount: number;
 
   @prop({
     ref: UserEntity,
     required: true
   })
-  public userId: Ref<UserEntity>;
+  public user: Ref<UserEntity>;
 
   @prop({_id: false, required: true})
   public coordinates: Coordinates;

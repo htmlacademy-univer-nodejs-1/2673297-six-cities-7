@@ -93,7 +93,7 @@ export class ImportCommand implements Command {
     const user = await this.userService.findOrCreate({
       name: offer.user.name,
       email: offer.user.email,
-      avatar: offer.user.avatar,
+      avatarPath: offer.user.avatarPath,
       type: offer.user.type,
       password: DEFAULT_USER_PASSWORD,
     }, this.salt);

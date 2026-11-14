@@ -1,4 +1,4 @@
-import {createReadStream} from 'node:fs';
+﻿import {createReadStream} from 'node:fs';
 import { FileReader } from './file-reader.interface.js';
 import { Offer } from '../../types/offer/offer.type.js';
 import { CITIES } from '../../types/city.constants.js';
@@ -90,7 +90,7 @@ export class TSVFileReader extends EventEmitter implements FileReader {
     const author: User = {
       name: authorName,
       email,
-      avatar,
+      avatarPath: avatar,
       type: userType as UserType,
     };
 

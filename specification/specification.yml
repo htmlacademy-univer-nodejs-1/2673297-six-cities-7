@@ -363,37 +363,6 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 
-  /users/avatar:
-    post:
-      tags: [ users ]
-      operationId: uploadAvatar
-      summary: Загрузка аватара пользователя
-      description: Загружает изображение в формате .jpg или .png для текущего пользователя.
-      security:
-        - bearerAuth: [ ]
-      requestBody:
-        required: true
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              required: [ avatar ]
-              properties:
-                avatar:
-                  type: string
-                  format: binary
-      responses:
-        '200':
-          description: Аватар обновлён
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-
 components:
   securitySchemes:
     bearerAuth:
@@ -489,7 +458,10 @@ components:
           type: string
           enum: [default, pro]
           example: default
-
+        avatarPath:
+          type: string
+          format: uri
+          example: roland.jpg
     LoginUser:
       type: object
       required: [email, password]
@@ -757,7 +729,7 @@ components:
             - numberRooms
             - numberGuests
             - comforts
-            - author
+            - user
             - coordinates
           properties:
             description:
@@ -790,7 +762,7 @@ components:
                   - Washer
                   - Towels
                   - Fridge
-            author:
+            user:
               $ref: '#/components/schemas/User'
             coordinates:
               $ref: '#/components/schemas/Coordinates'

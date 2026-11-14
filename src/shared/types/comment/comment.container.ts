@@ -3,7 +3,7 @@ import { types } from '@typegoose/typegoose';
 import { CommentService } from './comment-service.interface.js';
 import { CommentEntity, CommentModel } from './comment.entity.js';
 import { DefaultCommentService } from './default-comment.service.js';
-import {Component} from '../component.enum';
+import {Component} from '../component.enum.js';
 
 export function createCommentContainer() {
   const commentContainer = new Container();
