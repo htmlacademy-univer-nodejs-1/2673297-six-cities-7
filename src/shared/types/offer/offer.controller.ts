@@ -13,6 +13,8 @@ import {FullOfferRdo} from './rdo/full.offer.rdo.js';
 import {CreateOfferDto} from './dto/create-offer.dto.js';
 import {UpdateOfferDto} from './dto/update-offer.dto.js';
 import {CityName} from '../city.enum.js';
+import {ValidateObjectIdMiddleware} from '../../libs/rest/middleware/validate-objectid.middleware.js';
+import {ValidateDtoMiddleware} from '../../libs/rest/middleware/validate-dto.middleware.js';
 
 @injectable()
 export class OfferController extends BaseController {
@@ -24,10 +26,10 @@ export class OfferController extends BaseController {
     this.logger.info('Register routes for OfferController');
 
     this.addRoute({ path: '/', method: HttpMethod.Get, handler: this.index });
-    this.addRoute({ path: '/', method: HttpMethod.Get, handler: this.create });
-    this.addRoute({ path: '/:id', method: HttpMethod.Get, handler: this.get });
-    this.addRoute({ path: '/:id', method: HttpMethod.Patch, handler: this.update });
-    this.addRoute({ path: '/:id', method: HttpMethod.Delete, handler: this.delete });
+    this.addRoute({ path: '/', method: HttpMethod.Post, handler: this.create, middlewares: [new ValidateDtoMiddleware(CreateOfferDto)] });
+    this.addRoute({ path: '/:id', method: HttpMethod.Get, handler: this.get, middlewares: [new ValidateObjectIdMiddleware('offerId')] });
+    this.addRoute({ path: '/:id', method: HttpMethod.Patch, handler: this.update, middlewares: [new ValidateObjectIdMiddleware('offerId'), new ValidateDtoMiddleware(UpdateOfferDto)]});
+    this.addRoute({ path: '/:id', method: HttpMethod.Delete, handler: this.delete, middlewares: [new ValidateObjectIdMiddleware('offerId')] });
   }
 
   public async index(_req: Request, res: Response): Promise<void> {
