@@ -13,5 +13,6 @@
   FavoriteModel: Symbol.for('FavoriteModel'),
   UserController: Symbol.for('UserController'),
   OfferController: Symbol.for('OfferController'),
-  ExceptionFilter: Symbol.for('ExceptionFilter')
+  ExceptionFilter: Symbol.for('ExceptionFilter'),
+  CommentController: Symbol.for('CommentController')
 } as const;
